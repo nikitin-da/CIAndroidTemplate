@@ -11,8 +11,6 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
-
-        testPackageName "com.moneysupermarket.android.tests"
     }
 
 /*    compileOptions {
@@ -62,18 +60,12 @@ android {
             println "$project.buildDir/apk/" + apkName
             variant.outputFile = file("$project.buildDir/apk/" + apkName)
         }
-
     }
 
     lintOptions {
         abortOnError false
 //        lintConfig file("$project.rootDir/config/lint/lint_studio.xml")
 //        showAll true
-    }
-
-
-    sourceSets {
-        androidTest.setRoot('src/instrumentTest')
     }
 
     packagingOptions {
@@ -124,3 +116,93 @@ dependencies {
 
     compile project(':saripaar-validation')
 }
+
+apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle){
+    ignoreFailures = true
+    configFile file("$project.rootDir/config/checkstyle/AndroidStyle.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/packageName/**', '**/utils/MyFile.java'
+    classpath = files()
+}
+
+//configurations {
+//    codequality //files(['src/androidTest', 'src/main/java'])
+//}
+//
+//dependencies {
+//    codequality 'com.puppycrawl.tools:checkstyle:5.6'
+//}
+//
+//task checkstyle(type: AndroidCheckstyleTask) {
+//    ignoreFailures true
+//    showViolations false
+//}
+//
+//check.dependsOn(checkstyle)
+//
+/////////////////////////////////////////////////
+//////////////// Groovy Task Class //////////////
+/////////////////////////////////////////////////
+//import org.gradle.api.internal.project.IsolatedAntBuilder
+//
+///**
+//* See parameters at http://checkstyle.sourceforge.net/anttask.html
+//*/
+//class AndroidCheckstyleTask extends DefaultTask {
+//    @InputFile
+//    @Optional
+//    File configFile = new File("$project.rootDir/config/checkstyle/AndroidStyle.xml")
+//    @InputFile
+//    @Optional
+//    File xslFile = new File("$project.rootDir/config/checkstyle/checkstyle-noframes-sorted.xsl")
+//    @OutputFile
+//    @Optional
+//    File outputFile = new File("$project.buildDir/reports/checkstyle/checkstyle-${project.name}.xml")
+//    FileCollection checkstyleClasspath = project.configurations.codequality
+//
+//    Boolean ignoreFailures = false
+//    Boolean showViolations = true
+//    Project gradleProject = project
+//
+//    def AndroidCheckstyleTask() {
+//        description = 'Runs checkstyle against Android sourcesets.'
+//        group = 'Code Quality'
+//    }
+//
+//    @TaskAction
+//    def runCheckstyle() {
+//        outputFile.parentFile.mkdirs()
+//        def antBuilder = services.get(IsolatedAntBuilder)
+//        antBuilder.withClasspath(checkstyleClasspath).execute {
+//            ant.taskdef(name: 'checkstyle', classname: 'com.puppycrawl.tools.checkstyle.CheckStyleTask')
+//            // see also, maxWarnings and failureProperty arguments
+//            ant.checkstyle(config: configFile, failOnViolation: !ignoreFailures) {
+//                fileset(dir: gradleProject.projectDir.getPath()) {
+//                    gradleProject.android.sourceSets.each { sourceSet ->
+//                        sourceSet.java.each { file ->
+//                            include(name: gradleProject.relativePath(file))
+//                        }
+//                    }
+//                }
+//                if (showViolations) {
+//                    formatter(type: 'plain', useFile: false)
+//                }
+//                formatter(type: 'xml', toFile: outputFile)
+//            }
+//
+//            if (outputFile.exists()) {
+//                ant.xslt(in: outputFile,
+//                        style: xslFile,
+//                        out: outputFile.absolutePath.replaceFirst(~/\.[^\.]+$/, ".html")
+//                )
+//            }
+//        }
+//    }
+//}
+//

@@ -1,0 +1,5 @@
+include ':core'
+
+include ':saripaar-validation'
+project(':saripaar-validation').projectDir = new File('thirdpartytools/saripaar-validation')
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TestJacoco</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="createaccount_input_question_answer_edit_hint">Your answer</string>
+    <string name="createaccount_input_question_spinner_hint">Choose question</string>
+    <string name="createaccount_input_password_re_edit_hint">Confirm your password…</string>
+    <string name="createaccount_input_password_edit_hint">Enter a password…</string>
+    <string name="createaccount_input_name_edit_hint">Enter your firstname…</string>
+    <string name="createaccount_input_surname_edit_hint">Enter your surname…</string>
+    <string name="createaccount_input_email_edit_hint">Enter your email address…</string>
+
+    <string name="createaccount_input_email_validation_fail">Please enter a valid email address (e.g. john@domain.com)</string>
+    <string name="createaccount_input_password_validation_fail">Please enter a password with 6 characters or more</string>
+    <string name="createaccount_input_question_spinner_validation_fail">Select a question</string>
+
+    <!-- Required validation -->
+    <string name="createaccount_input_email_required_validation_fail">Please enter your email address</string>
+    <string name="createaccount_input_name_required_validation_fail">Please enter your name</string>
+    <string name="createaccount_input_surname_required_validation_fail">Please enter your surname</string>
+    <string name="createaccount_input_password_required_validation_fail">Please enter your password</string>
+    <string name="createaccount_input_repassword_confirm_validation_fail">Please retype your password</string>
+    <string name="createaccount_input_question_answer_required_validation_fail">Please enter the answer to your security question</string>
+
+    <string name="createaccount_input_name_edit_digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+
+</resources>

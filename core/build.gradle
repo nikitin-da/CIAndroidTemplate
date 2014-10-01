@@ -1,0 +1,126 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'crashlytics'
+apply plugin: 'jacoco'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+
+        testPackageName "com.moneysupermarket.android.tests"
+    }
+
+/*    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }*/
+
+    signingConfigs {
+        debug {
+            storeFile file("../config/signing/key.jks")
+            storePassword = "123456"
+            keyAlias = "123"
+            keyPassword = "123456"
+        }
+        release {
+            storeFile file("../config/signing/key.jks")
+            storePassword = "123456"
+            keyAlias = "123"
+            keyPassword = "123456"
+        }
+    }
+
+    buildTypes {
+        debug {
+            runProguard false
+            signingConfig signingConfigs.debug
+            testCoverageEnabled = true
+        }
+
+        release {
+            runProguard false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            testCoverageEnabled = true
+        }
+
+        android.applicationVariants.all { variant ->
+            println variant.description + " artifact path **********";
+            def apkName = "${group}";
+            if (!variant.zipAlign) {
+                apkName += "-unaligned";
+            }
+            apkName += "-" + defaultConfig.versionName;
+            apkName += "-" + variant.buildType.name;
+            apkName += ".apk";
+
+            println "$project.buildDir/apk/" + apkName
+            variant.outputFile = file("$project.buildDir/apk/" + apkName)
+        }
+
+    }
+
+    lintOptions {
+        abortOnError false
+//        lintConfig file("$project.rootDir/config/lint/lint_studio.xml")
+//        showAll true
+    }
+
+
+    sourceSets {
+        androidTest.setRoot('src/instrumentTest')
+    }
+
+    packagingOptions {
+        exclude "META-INF/LICENSE.txt"
+        exclude "META-INF/NOTICE.txt"
+        exclude 'LICENSE.txt'
+    }
+
+    jacoco {
+        version = '0.6.2.201302030002'
+    }
+
+    testOptions {
+        resultsDir = "$project.buildDir/instrumentTest-results"
+    }
+}
+
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Test.class" // whatever Ant pattern matches your test class files
+}
+
+task connectedInstrumentTest(dependsOn: connectedCheck)
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.google.android.gms:play-services:+'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'org.roboguice:roboguice:2.0'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
+
+    compile('org.simpleframework:simple-xml:2.7.+') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+
+    compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+
+//    compile 'com.crashlytics.android:crashlytics:1.+'
+
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
+    compile 'com.squareup.picasso:picasso:2.2.0'
+
+
+    compile project(':saripaar-validation')
+}

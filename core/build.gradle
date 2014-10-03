@@ -75,7 +75,16 @@ android {
     }
 
     jacoco {
-        version = '0.6.2.201302030002'
+        toolVersion = "0.7.1.201405082137"
+        reportsDir = "${buildDir}/jacocoReport"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination "${buildDir}/jacocoHtml"
+        }
     }
 
     testOptions {

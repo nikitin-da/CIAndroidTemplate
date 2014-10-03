@@ -14,7 +14,7 @@ public class ValidatePropertySetterTest extends TestCase {
 
     /**
      *  Simple test.
-     *  Added, because CI report with Jococo failed,
+     *  Added, because CI report with JaCoCo failed,
      *  when there is no tests in submodule.
      */
     public void testPropertySetter() {

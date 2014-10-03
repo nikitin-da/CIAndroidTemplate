@@ -1,5 +1,3 @@
 include ':core'
 
-include ':saripaar-validation'
-project(':saripaar-validation').projectDir = new File('thirdpartytools/saripaar-validation')
-
+include ':thirdpartytools:saripaar-validation:saripaar_lib'

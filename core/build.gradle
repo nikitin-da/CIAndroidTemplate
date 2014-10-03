@@ -114,7 +114,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.2.0'
 
 
-    compile project(':saripaar-validation')
+    compile project(':thirdpartytools:saripaar-validation:saripaar_lib')
 }
 
 apply plugin: 'checkstyle'

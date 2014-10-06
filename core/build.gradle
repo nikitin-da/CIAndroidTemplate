@@ -37,14 +37,12 @@ android {
         debug {
             runProguard false
             signingConfig signingConfigs.debug
-            testCoverageEnabled = true
         }
 
         release {
             runProguard false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            testCoverageEnabled = true
         }
 
         android.applicationVariants.all { variant ->
